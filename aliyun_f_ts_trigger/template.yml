@@ -1,0 +1,23 @@
+ROSTemplateFormatVersion: '2015-09-01'
+Transform: 'Aliyun::Serverless-2018-04-03'
+Resources:
+  aliyun_f_ts_trigger:
+    Type: 'Aliyun::Serverless::Service'
+    Properties:
+      Description: 'helloworld'
+      LogConfig:
+        Project: ls-fun
+        Logstore: ls-fun-ls-1
+    aliyun_f_ts_trigger:
+      Type: 'Aliyun::Serverless::Function'
+      Properties:
+        Handler: code.seven.test.f_ts_trigger.App::handleRequest
+        Initializer: code.seven.test.f_ts_trigger.App::initialize
+        Runtime: java8
+        CodeUri: './'
+      Events:
+        my-tablestore-trigger:
+          Type: TableStore
+          Properties:
+            InstanceName: test-instance-1
+            TableName: ts_order
